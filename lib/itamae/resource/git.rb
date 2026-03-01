@@ -68,7 +68,8 @@ module Itamae
       end
 
       def check_empty_dir
-        run_command("test -z \"$(ls -A #{shell_escape(attributes.destination)})\"", error: false).success?
+        result = run_command(["find", attributes.destination, "-maxdepth", "0", "-empty"], error: false)
+        result.success?
       end
 
       def run_command_in_repo(*args)
